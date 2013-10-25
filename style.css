@@ -1,0 +1,19 @@
+#group {
+    margin-bottom: 1em;
+}
+
+#mentors {
+    text-align: center;
+}
+
+#mentors tr {
+    background-color: #ddd;
+}
+
+#mentors td, #mentors th {
+    padding: 10px 10px 10px 10px;
+}
+
+#mentors tr:nth-child(odd) {
+    background-color: #eee;
+}
