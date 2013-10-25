@@ -9,7 +9,12 @@ var mentorGroups = {
                      "mobile": ["capella", "margaret", "wesj", "botond", "kats", "sriram",
                                 "nalexander", "liuche"],
                      "gaia": ["jlal", ":julienw", "alive", "etienne", "dkuo", "timdream",
-                              "evelyn", ":rik"]
+                              "evelyn", ":rik"],
+                     "webdev": ["adrian@mozilla.com", "andym", "chris.lonnen@gmail.com",
+                                "clouserw", "cvan", "giorgos@mozilla.com", "groovecoder",
+                                "laura@mozilla.com", "mythmon", "openjck",
+                                "pmac@mozilla.com", "rhelmer@rhelmer.org", "r1cky",
+                                "robhudson", "sancus@off.net", "willkg"]
                    };
 
 function processResult(msg, results, row) {
