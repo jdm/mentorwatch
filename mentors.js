@@ -1,5 +1,5 @@
 var mentorGroups = {
-                     "test": ["jdm"],
+                     "": [],
                      "js": ["waldo", "terrence", "evilpie", "nbp", "jorendorff", "luke"],
                      "gecko": ["jdm", "bholley", "bz", "ms2ger", "bsmedberg", "ted",
                                "dholbert", "seth", "dbaron", "tn"],
