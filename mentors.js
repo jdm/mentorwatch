@@ -2,7 +2,7 @@ var mentorGroups = {
                      "": [],
                      "js": ["waldo", "terrence", "evilpie", "nbp", "jorendorff", "luke"],
                      "gecko": ["jdm", "bholley", "bz", "ms2ger", "bsmedberg", "ted",
-                               "dholbert", "seth", "dbaron", "tn"],
+                               "dholbert", "seth", "dbaron", "tn", "yoric"],
                      "gfx": ["jrmuizel", "bjacob", "benwa", "vlad", "mattwoodrow"],
                      "devtools": ["msucan", "vporof", "paul", "robcee", "bgrinstead",
                                   "optimizer", "jimb"],
