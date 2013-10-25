@@ -17,3 +17,7 @@
 #mentors tr:nth-child(odd) {
     background-color: #eee;
 }
+
+footer {
+    margin-top: 1em;
+}

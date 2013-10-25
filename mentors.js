@@ -9,7 +9,7 @@ var mentorGroups = {
                      "mobile": ["capella", "margaret", "wesj", "botond", "kats", "sriram",
                                 "nalexander", "liuche"],
                      "gaia": ["jlal", ":julienw", "alive", "etienne", "dkuo", "timdream",
-                              "evelyn", "rik"]
+                              "evelyn", ":rik"]
                    };
 
 function processResult(msg, results, row) {
