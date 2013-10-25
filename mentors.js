@@ -1,9 +1,22 @@
 var mentorGroups = {
-                     "platform": ["jdm", "bholley", "bz", "ms2ger", "waldo", "terrence"],
-                     "devtools": ["msucan", "vporof", "paul", "robcee"],
-                     "mobile": ["capella", "margaret", "wesj", "botond", "kats"],
-                     "gaia": []
+                     "test": ["jdm"],
+                     "js": ["waldo", "terrence", "evilpie", "nbp", "jorendorff", "luke"],
+                     "gecko": ["jdm", "bholley", "bz", "ms2ger", "bsmedberg", "ted",
+                               "dholbert", "seth", "dbaron", "tn"],
+                     "gfx": ["jrmuizel", "bjacob", "benwa", "vlad", "mattwoodrow"],
+                     "devtools": ["msucan", "vporof", "paul", "robcee", "bgrinstead",
+                                  "optimizer", "jimb"],
+                     "mobile": ["capella", "margaret", "wesj", "botond", "kats", "sriram",
+                                "nalexander", "liuche"],
+                     "gaia": ["jlal", ":julienw", "alive", "etienne", "dkuo", "timdream",
+                              "evelyn", "rik"]
                    };
+
+function processResult(msg, results, row) {
+  $("td", row)[1].textContent = results.length;
+  $("td", row)[2].textContent =
+    results.filter(function(bug) { return bug.status == "RESOLVED"; }).length;
+}
 
 function updateGroup() {
   var mentorsHolder = $('#mentors')[0];
@@ -26,10 +39,21 @@ function updateGroup() {
     row.appendChild(total);
     row.appendChild(fixed);
     mentorsHolder.appendChild(row);
+
+    bugzilla.searchBugs({status_whiteboard: 'mentor=' + mentors[i],
+                         whiteboard_type: 'contains_all',
+                         bug_status: ["NEW","ASSIGNED","REOPENED",
+                                      "UNCONFIRMED", "RESOLVED"]},
+                         function(msg, results) {
+                           processResult(msg, results, this);
+                         }.bind(row));
   }
 }
 
+var bugzilla;
 $(document).ready(function() {
+  bugzilla = bz.createClient();
+
   for (var i in mentorGroups) {
     var opt = document.createElement('option');
     opt.textContent = i;
