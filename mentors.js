@@ -18,9 +18,30 @@ var mentorGroups = {
                    };
 
 function processResult(msg, results, row) {
-  $("td", row)[1].textContent = results.length;
-  $("td", row)[2].textContent =
-    results.filter(function(bug) { return bug.status == "RESOLVED"; }).length;
+  var open_bugs = results.filter(function(bug) {
+    return ["RESOLVED", "VERIFIED"].indexOf(bug.status) == -1;
+  });
+  var cols = $("td", row);
+  cols[1].textContent = results.length;
+  cols[2].textContent = results.length - open_bugs.length;
+  cols[3].textContent = open_bugs.length;
+
+  var active_within_two_weeks = open_bugs.filter(function(bug) {
+    return (Date.now() - Date.parse(bug.last_change_time)) < (1000 * 60 * 60 * 24 * 14);
+  });
+  cols[4].textContent = active_within_two_weeks.length +
+    ' (' + active_within_two_weeks.filter(function(bug) {
+      return bug.assigned_to.name != "nobody" && bug.assigned_to.name != "general";
+    }).length  + ')';
+
+  var fixed_bugs = results.filter(function(bug) {
+    return open_bugs.map(function(bug) { return bug.id; }).indexOf(bug.id) == -1;
+  });
+  var fixed_assignees = Object.create({});
+  fixed_bugs.forEach(function(bug) {
+    fixed_assignees[bug.assigned_to.real_name || bug.assigned_to.name] = true;
+  });
+  cols[5].textContent = Object.keys(fixed_assignees).length;
 }
 
 function updateGroup() {
@@ -34,15 +55,17 @@ function updateGroup() {
   var mentors = mentorGroups[$('#group')[0].value];
   for (var i = 0; i < mentors.length; i++) {
     var row = document.createElement('tr');
+
     var name = document.createElement('td');
     name.textContent = mentors[i];
-    var total = document.createElement('td');
-    total.appendChild(spinner.cloneNode());
-    var fixed = document.createElement('td');
-    fixed.appendChild(spinner.cloneNode());
     row.appendChild(name);
-    row.appendChild(total);
-    row.appendChild(fixed);
+
+    for (var j = 0; j < $('.header th').length - 1; j++) {
+      var col = document.createElement('td');
+      col.appendChild(spinner.cloneNode());
+      row.appendChild(col);
+    }
+
     mentorsHolder.appendChild(row);
 
     bugzilla.searchBugs({status_whiteboard: 'mentor=' + mentors[i],
