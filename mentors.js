@@ -75,7 +75,8 @@ function updateGroup() {
     bugzilla.searchBugs({status_whiteboard: 'mentor=' + mentors[i],
                          whiteboard_type: 'contains_all',
                          bug_status: ["NEW","ASSIGNED","REOPENED",
-                                      "UNCONFIRMED", "RESOLVED"]},
+                                      "UNCONFIRMED", "RESOLVED"],
+                         include_fields: "id,last_change_time,status,assigned_to"},
                          function(msg, results) {
                            processResult(msg, results, this);
                          }.bind(row));
