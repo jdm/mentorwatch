@@ -6,18 +6,48 @@
     text-align: center;
 }
 
-#mentors tr {
+tr {
     background-color: #ddd;
 }
 
-#mentors td, #mentors th {
+td, th {
     padding: 10px 10px 10px 10px;
 }
 
-#mentors tr:nth-child(odd) {
+tr:nth-child(odd) {
     background-color: #eee;
 }
 
 footer {
     margin-top: 1em;
+    clear: left;
+}
+
+#mentor {
+}
+
+#mentor .name {
+    font-size: 7em;
+    text-align: center;
+}
+
+.idle {
+    width: 50%;
+    float: left;
+}
+
+.mentorable {
+    width: 50%;
+    float: right;
+}
+
+.title {
+    font-size: 4em;
+}
+
+.spinner {
+    background-image: url('loading.gif');
+    background-repeat: no-repeat;
+    min-height: 20px;
+    min-width: 10px;
 }

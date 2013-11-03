@@ -61,7 +61,8 @@ function updateGroup() {
     var row = document.createElement('tr');
 
     var name = document.createElement('td');
-    name.textContent = mentors[i];
+    name.innerHTML = '<a href="' + window.location.protocol + window.location.pathname +
+                       '?mentor=' + mentors[i] + '">' + mentors[i] + '</a>';
     row.appendChild(name);
 
     for (var j = 0; j < $('.header th').length - 1; j++) {
@@ -83,14 +84,137 @@ function updateGroup() {
   }
 }
 
+function showMentor(name) {
+  $('#team')[0].style.display = 'none';
+  $('#mentor')[0].style.display = 'block';
+  $('#mentor .name')[0].textContent = name;
+
+  function hideSpinner(classname) {
+    var content = $('.' + classname)[0];
+    var spinner = $('.spinner', content)[0];
+    spinner.parentNode.removeChild(spinner);
+  }
+
+  /*function processResults(msg, results) {
+  }
+  bugzilla.searchBugs({status_whiteboard: 'mentor=' + name,
+                       whiteboard_type: 'contains_all',
+                       bug_status: ["NEW","ASSIGNED","REOPENED",
+                                      "UNCONFIRMED", "RESOLVED"],
+                       include_fields: "id,last_change_time,status,assigned_to,product," +
+                                       "component"},
+                      processResults);*/
+
+  function timeFromModified(lastChangeTime) {
+    var lastModified = new Date(lastChangeTime);
+    var today = new Date();
+    var one_day = 1000*60*60*24;
+    return(Math.ceil((today.getTime() - lastModified.getTime()) / (one_day)));
+  }
+
+  function processIdleResults(msg, results) {
+    hideSpinner('idle');
+    var content = $('.idle > table')[0];
+    var filtered = results.filter(function(bug) {
+      return timeFromModified(bug.last_change_time) > 14;
+    });
+    var sorted = filtered.sort(function(a, b) {
+      return a.last_change_time < b.last_change_time;
+    });
+    sorted.forEach(function(bug) {
+      var row = document.createElement('tr');
+      var description = document.createElement('td');
+      var assignee = document.createElement('td');
+      var idle = document.createElement('td');
+      description.innerHTML = "<a href='http://bugzil.la/" + bug.id + "'>" + bug.id + "</a> - " + bug.summary;
+      assignee.textContent = bug.assigned_to.name;
+      idle.textContent = timeFromModified(bug.last_change_time);
+      row.appendChild(description);
+      row.appendChild(assignee);
+      row.appendChild(idle);
+      content.appendChild(row);
+    });
+  }
+  bugzilla.searchBugs({status_whiteboard: 'mentor=' + name,
+                       whiteboard_type: 'contains_all',
+                       bug_status: ["NEW","ASSIGNED","REOPENED","UNCONFIRMED"],
+                       assigned_to: 'nobody@mozilla.org,general@js.bugs',
+                       assigned_to_type: 'not_contains_any',
+                       include_fields: "id,last_change_time,assigned_to,summary",
+                       /*assignee_idle: '2w'*/},
+                      processIdleResults);
+
+  function processAssigned(msg, results) {
+    hideSpinner('mentorable');
+    var filtered = results.filter(function(bug) {
+      return timeFromModified(bug.last_change_time) > 30;
+    });
+    var sorted = filtered.sort(function(a, b) {
+      return a.last_change_time > b.last_change_time;
+    });
+    var content = $('.mentorable > table')[0];
+    sorted.forEach(function(bug) {
+      var row = document.createElement('tr');
+      var description = document.createElement('td');
+      var idle = document.createElement('td');
+      description.innerHTML = "<a href='http://bugzil.la/" + bug.id + "'>" + bug.id + "</a> - " + bug.summary;
+      idle.textContent = timeFromModified(bug.last_change_time);
+      row.appendChild(description);
+      row.appendChild(idle);
+      content.appendChild(row);
+    });
+  }
+  var searchable_name = name;
+  if (!searchable_name.startsWith(':'))
+    searchable_name = ':' + searchable_name;
+  bugzilla.searchUsers(searchable_name, function(msg, result) {
+    bugzilla.searchBugs({assigned_to: result[0].email,
+                         whiteboard_type: 'contains_all',
+                         bug_status: ["NEW","ASSIGNED","REOPENED","UNCONFIRMED"],
+                         include_fields: "id,summary,last_change_time"},
+                        processAssigned);
+  });
+}
+
+function showDashboard() {
+  $('#team')[0].style.display = 'block';
+  $('#mentor')[0].style.display = 'none';
+}
+
 var bugzilla;
 $(document).ready(function() {
-  bugzilla = bz.createClient();
+  bugzilla = bz.createClient({username: bzUsername,
+                              password: bzPassword});
 
   for (var i in mentorGroups) {
     var opt = document.createElement('option');
     opt.textContent = i;
     $('#group')[0].appendChild(opt);
   }
-  updateGroup();
+
+  var query = window.location.search;
+
+  function query_var(sVar) {
+    return unescape(query.replace(new RegExp("^(?:.*[&\\?]" + escape(sVar).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
+  }
+  var chosen = query_var("team");
+  if (chosen) {
+    var teams = document.getElementsByTagName("option");
+    for (var i = 0; i < teams.length; i++) {
+      if (chosen == teams[i].textContent) {
+        teams[i].parentNode.selectedIndex = i;
+        break;
+      }
+    }
+  }
+
+  var mentor = query_var("mentor");
+  if (!chosen && mentor) {
+    showMentor(mentor);
+  }
+
+  if (chosen || !mentor) {
+    showDashboard();
+    updateGroup();
+  }
 });

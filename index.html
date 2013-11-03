@@ -6,6 +6,7 @@
 <link href="style.css" rel="stylesheet">
 </head>
 <body>
+<div id="team">
 Choose a team: <select id="group" onchange="updateGroup()"></select>
 <table id="mentors">
 <tr class="header">
@@ -17,10 +18,29 @@ Choose a team: <select id="group" onchange="updateGroup()"></select>
   <th>Mentored users</th>
 </tr>
 </table>
+</div>
+<div id="mentor">
+  <div class="name"></div>
+  <div class="idle">
+    <div class="title">Idle mentored bugs</div>
+    <table>
+      <tr><th>Bug</th><th>Assignee</th><th>Days idle</th></tr>
+    </table>
+    <div class="spinner"></div>
+  </div>
+  <div class="mentorable">
+    <div class="title">Potential mentored bugs</div>
+    <table>
+      <tr><th>Bug</th><th>Days idle</th></tr>
+    </table>
+    <div class="spinner"></div>
+  </div>
+</div>
 <footer>
 Written by <a href="https://mozillians.org/u/jdm/">Josh Matthews</a>. Source available at <a href="https://github.com/jdm/mentorwatch">github</a>.
 </footer>
 <script src="jquery-1.9.1.min.js"></script>
+<script src="auth.js"></script>
 <script src="mentors.js"></script>
 <script src="bz-0.2.3.js"></script>
 </body>
