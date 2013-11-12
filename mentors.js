@@ -9,7 +9,7 @@ var mentorGroups = {
                      "gfx": ["jrmuizel", "bjacob", "benwa", "vlad", "mattwoodrow"],
                      "devtools": ["msucan", "vporof", "paul", "robcee", "bgrinstead",
                                   "optimizer", "jimb", "past", "harth", "jwalker",
-                                  "mratcliffe", "benvie", "fitzgen", "anton", "jryans"],
+                                  "mratcliffe", "benvie", "nfitzgerald@mozilla.com", "anton", "jryans"],
                      "mobile": ["blassey", "bnicholson", "capella", "jchen", "kats", "liuche", "lucasr",
                                 "margaret", "mbrubeck", "mcomella", "mfinkle", "nalexander",  "rnewman",
                                 "snorp", "sriram", "wesj"],
