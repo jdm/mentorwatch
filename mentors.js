@@ -5,7 +5,7 @@ var mentorGroups = {
                                  "mikedeboer","paolo", "smacleod", "ttaubert", "Unfocused"],
                      "js": ["waldo", "terrence", "evilpie", "nbp", "jorendorff", "luke"],
                      "gecko": ["jdm", "bholley", "bz", "ms2ger", "bsmedberg", "ted",
-                               "dholbert", "seth", "dbaron", "tn", "yoric", ":tdz", ":gsvelto"],
+                               "dholbert", "seth", "dbaron", "tn", "yoric", ":tdz", ":gsvelto", ":drs"],
                      "gfx": ["jrmuizel", "bjacob", "benwa", "vlad", "mattwoodrow"],
                      "devtools": ["msucan", "vporof", "paul", "robcee", "bgrinstead",
                                   "optimizer", "jimb", "past", "harth", "jwalker",
