@@ -19,7 +19,8 @@ var mentorGroups = {
                                 "clouserw", "cvan", "giorgos@mozilla.com", "groovecoder",
                                 "laura@mozilla.com", "mythmon", "openjck",
                                 "pmac@mozilla.com", "rhelmer@rhelmer.org", "r1cky",
-                                "robhudson", "sancus@off.net", "willkg"]
+                                "robhudson", "sancus@off.net", "willkg",
+                                "tasos@mozilla.com", "jgiannelos@mozilla.com"]
                    };
 
 function processResult(msg, results, row) {
