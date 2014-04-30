@@ -12,7 +12,7 @@ var mentorGroups = {
                                   "mratcliffe", "benvie", "nfitzgerald@mozilla.com", "anton", "jryans"],
                      "mobile": ["blassey", "bnicholson", "capella", "jchen", "kats", "liuche", "lucasr",
                                 "margaret", "mbrubeck", "mcomella", "mfinkle", "nalexander",  "rnewman",
-                                "snorp", "sriram", "wesj"],
+                                "snorp", "sriram", "wesj", "gcp"],
                      "gaia": ["jlal", ":julienw", "alive", "etienne", "dkuo", "timdream",
                               "evelyn", ":rik", ":gsvelto", ":drs"],
                      "webdev": ["adrian@mozilla.com", "andym", "chris.lonnen@gmail.com",
